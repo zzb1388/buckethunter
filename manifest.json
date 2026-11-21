@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "BucketHunter",
+  "version": "0.4.1",
+  "description": "自动爬取页面与 JS 中的对象存储地址,被动探测列桶/私有/接管候选,支持可控 PUT 写入探针(不删除)",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "buckethunter@local.tool",
+      "strict_min_version": "115.0"
+    }
+  },
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "downloads",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": [
+      "src/lib/util.js",
+      "src/lib/patterns.js",
+      "src/lib/probe.js",
+      "src/background.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "BucketHunter",
+    "default_icon": "icons/icon.svg",
+    "default_popup": "src/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}
