@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>BucketHunter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="head">
+    <div class="brand">
+      <img src="../icons/icon.svg" alt="">
+      <div class="brandtext">
+        <h1>BucketHunter</h1>
+        <span class="ver">0.4</span>
+      </div>
+    </div>
+    <div class="pageinfo" id="pageInfo" title="">—</div>
+  </header>
+
+  <div class="toolbar">
+    <button id="btnScan" class="primary">扫描当前页</button>
+    <button id="btnStop" disabled>停止</button>
+    <div class="manual">
+      <input id="manualUrl" type="text" placeholder="手动探测:URL / 域名 / 桶地址" spellcheck="false">
+      <button id="btnManual">探测</button>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><div class="fill" id="progressFill"></div></div>
+    <div class="ptext" id="progressText">空闲</div>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="filters">
+    <label class="scope"><input type="checkbox" id="scopeAll"> 显示全部历史(不限于当前页)</label>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="cb"><input type="checkbox" id="checkAll"></th>
+          <th>目标</th>
+          <th>云商</th>
+          <th>区域</th>
+          <th>存在性 / 可列</th>
+          <th>写入</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty">暂无结果,先点「扫描当前页」</div>
+  </div>
+
+  <div class="detail" id="detail" hidden></div>
+
+  <details class="settings">
+    <summary>设置</summary>
+    <div class="grid">
+      <label class="chk"><input id="setAutoScan" type="checkbox"> 自动扫描当前页(页面加载 / 切换标签 / 打开插件时,同网址 24 小时内不重复)</label>
+      <label>JS 抓取上限<input id="setMaxJs" type="number" min="0" max="2000" step="10"></label>
+      <label>并发数<input id="setConc" type="number" min="1" max="10"></label>
+      <label>超时(ms)<input id="setTimeout" type="number" min="2000" max="60000" step="1000"></label>
+      <label>单文件上限(KB)<input id="setMaxKb" type="number" min="256" max="16384" step="256"></label>
+      <label>Chunk 枚举上限<input id="setChunkLimit" type="number" min="0" max="2000" step="50"></label>
+      <label class="chk"><input id="setCrawlChunks" type="checkbox"> 抓取 webpack 懒加载 chunk(桶地址常在未加载的路由 chunk 里)</label>
+      <label class="chk"><input id="setAutoWrite" type="checkbox"> 扫描后自动对「可列桶」写探针(不删除)</label>
+      <label class="chk"><input id="setCname" type="checkbox"> 解析自定义域名 CNAME(通过 DoH 发现 CDN 背后的真实桶)</label>
+    </div>
+  </details>
+
+  <footer class="foot">
+    <div class="left">
+      <button id="btnExportMd">导出 MD</button>
+      <button id="btnExportJson">导出 JSON</button>
+    </div>
+    <div class="right">
+      <button id="btnDelSel" class="danger">清除选中</button>
+      <button id="btnClearAll" class="danger">全部清除</button>
+    </div>
+  </footer>
+
+  <script src="lib/util.js"></script>
+  <script src="lib/patterns.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
